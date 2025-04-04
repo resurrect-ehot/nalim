@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group = "one.tech"
+version = rootProject.file('build.number').text.trim()
+
+compileJava {
+    options.compilerArgs << '--add-modules' << 'jdk.internal.vm.ci' << '--add-exports' << 'jdk.internal.vm.ci/jdk.vm.ci.code=ALL-UNNAMED' << '--add-exports' << 'jdk.internal.vm.ci/jdk.vm.ci.code.site=ALL-UNNAMED' << '--add-exports' << 'jdk.internal.vm.ci/jdk.vm.ci.hotspot=ALL-UNNAMED' << '--add-exports' << 'jdk.internal.vm.ci/jdk.vm.ci.meta=ALL-UNNAMED' << '--add-exports' << 'jdk.internal.vm.ci/jdk.vm.ci.runtime=ALL-UNNAMED'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+}
+
+jar {
+    manifest {
+        attributes(
+                'Premain-Class': 'one.nalim.Agent'
+        )
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src"]
+        }
+    }
+}
+
+
+// Apply a specific Java toolchain to ease working on different environments.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
